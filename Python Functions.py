@@ -68,3 +68,25 @@ def promote_row_to_header(df, search_headers):       #function for promoting hea
   
 search_headers = ['Project Name']    #where you put a column name that will promote all rows.
 categorical_df = promote_row_to_header(df, search_headers)
+
+
+
+### Dynamic Remove Rows Up until a Keyword
+
+def remove_rows_until_header(df,rows_to_stop):   # defining your function to take a (dataframe, where to stop)
+    
+    for i, row in  df.iterrows():                 #itterating over rows in the data (you plug in at the bottom) 
+        if set(rows_to_stop).issubset(set(row)):  #******************)()(())This line of code is essentially checking if the current row contains all the specified headers or values that you are searching for (defined by rows_to_remove). If the condition is True, it means the row likely contains the header you are looking to identify, given that rows_to_remove contains header titles you expect.
+            index = i                             #defining index
+            df = df.drop(df.index[0:index+1])     # dropping rows from index 0 to your index with headers +1 so it removes the header rows
+            
+            break    #break if condition is True?****)()()()
+        
+    df.reset_index(drop=True, inplace=True)    #resetting you index after performing those functions
+    return df                                  #returning your data frame
+
+rows_to_stop = ["Project Name"]                #looking for specific headers
+subset_df = remove_rows_until_header(categorical_df,rows_to_stop)         # putting parameters in your function
+subset_df
+
+
